@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const url =
+        "http://124.221.62.120:4101/uploads/application/1662973234697~Clash.for.Windows-0.20.2-win.7z";
+
+      fetch(url, {
+        headers: {
+          Accept: "*/*",
+        },
+      })
+        .then((response) => {
+          const contentType = response.headers.get("Content-Type");
+          return response.arrayBuffer().then((arrayBuffer) => ({
+            contentType,
+            arrayBuffer,
+          }));
+        })
+        .then(({ contentType, arrayBuffer }) => {
+          const base64 = btoa(
+            new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+          );
+
+          console.log(`data:${contentType};base64,${base64}`);
+        });
+    </script>
+  </body>
+</html>

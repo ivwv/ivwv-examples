@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>EventStream example</title>
+  </head>
+
+  <body>
+    <div id="output"></div>
+
+    <script>
+      let source = new EventSource("http://localhost:3000/");
+
+      source.addEventListener("message", (event) => {
+        let output = document.getElementById("output");
+        if (event.data === "close") {
+          source.close();
+        } else {
+          output.innerHTML += event.data;
+        }
+      });
+    </script>
+  </body>
+</html>
